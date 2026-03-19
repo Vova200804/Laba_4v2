@@ -69,7 +69,7 @@ namespace TextFileProcessor
       }
 
       SaveState();
-      _document.content = newContent;
+      _document.Content = newContent;
     }
 
     public void AppendText(string text)
@@ -81,7 +81,7 @@ namespace TextFileProcessor
       }
 
       SaveState();
-      _document.content = _document.content + text;
+      _document.Content = _document.Content + text;
     }
 
     public bool Undo()
@@ -156,7 +156,7 @@ namespace TextFileProcessor
         $"Saved successfully!\n" +
         $"Location: {newPath}\n" +
         $"Size: {fileInfo.Length} bytes (was {oldSize} bytes)\n" +
-        $"Modified: {_document.lastModified:yyyy-MM-dd HH:mm:ss}"
+        $"Modified: {_document.LastModified:yyyy-MM-dd HH:mm:ss}"
       );
     }
 
@@ -169,18 +169,18 @@ namespace TextFileProcessor
       }
 
       Console.WriteLine("\n--- DOCUMENT CONTENT ---");
-      Console.WriteLine(_document.content);
+      Console.WriteLine(_document.Content);
       Console.WriteLine("--- END OF DOCUMENT ---");
 
       int lineCount;
       lineCount = 0;
 
-      if (!string.IsNullOrEmpty(_document.content))
+      if (!string.IsNullOrEmpty(_document.Content))
       {
-        lineCount = _document.content.Split('\n').Length;
+        lineCount = _document.Content.Split('\n').Length;
       }
 
-      Console.WriteLine($"Stats: {_document.content.Length} chars, {lineCount} lines\n");
+      Console.WriteLine($"Stats: {_document.Content.Length} chars, {lineCount} lines\n");
     }
   }
 }

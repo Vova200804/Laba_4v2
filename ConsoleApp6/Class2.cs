@@ -8,9 +8,9 @@ namespace TextFileProcessor
   [Serializable]
   public class TDocument
   {
-    public string filePath { get; private set; }
-    public string content { get; set; }
-    public DateTime lastModified { get; private set; }
+    public string FilePath { get; private set; }
+    public string Content { get; set; }
+    public DateTime LastModified { get; private set; }
 
     private TDocument()
     {
@@ -24,43 +24,43 @@ namespace TextFileProcessor
         throw new Exception($"File not found: {path}");
       }
 
-      filePath = Path.GetFullPath(path);
-      content = File.ReadAllText(path);
-      lastModified = File.GetLastWriteTime(path);
+      FilePath = Path.GetFullPath(path);
+      Content = File.ReadAllText(path);
+      LastModified = File.GetLastWriteTime(path);
     }
 
     public TDocument(string path, string initialContent)
     {
-      filePath = Path.GetFullPath(path);
-      content = initialContent;
-      lastModified = DateTime.Now;
+      FilePath = Path.GetFullPath(path);
+      Content = initialContent;
+      LastModified = DateTime.Now;
     }
 
     public void Save()
     {
       string directory;
-      directory = Path.GetDirectoryName(filePath);
+      directory = Path.GetDirectoryName(FilePath);
 
       if (!string.IsNullOrEmpty(directory) && !Directory.Exists(directory))
       {
         Directory.CreateDirectory(directory);
       }
 
-      File.WriteAllText(filePath, content);
-      lastModified = File.GetLastWriteTime(filePath);
+      File.WriteAllText(FilePath, Content);
+      LastModified = File.GetLastWriteTime(FilePath);
     }
 
     public TMemento CreateMemento()
     {
       TMemento memento;
-      memento = new TMemento(content);
+      memento = new TMemento(Content);
 
       return memento;
     }
 
     public void RestoreMemento(TMemento memento)
     {
-      content = memento.content;
+      Content = memento.Content;
     }
 
     public void BinarySerialize(string targetPath)
@@ -75,9 +75,9 @@ namespace TextFileProcessor
 
         using (writer)
         {
-          writer.Write(filePath ?? "");
-          writer.Write(content ?? "");
-          writer.Write(lastModified.Ticks);
+          writer.Write(FilePath ?? "");
+          writer.Write(Content ?? "");
+          writer.Write(LastModified.Ticks);
         }
       }
     }
@@ -97,9 +97,9 @@ namespace TextFileProcessor
           TDocument document;
           document = new TDocument
           {
-            filePath = reader.ReadString(),
-            content = reader.ReadString(),
-            lastModified = new DateTime(reader.ReadInt64())
+            FilePath = reader.ReadString(),
+            Content = reader.ReadString(),
+            LastModified = new DateTime(reader.ReadInt64())
           };
 
           return document;
@@ -141,14 +141,14 @@ namespace TextFileProcessor
     public override string ToString()
     {
       string fileName;
-      fileName = Path.GetFileName(filePath);
+      fileName = Path.GetFileName(FilePath);
 
-      return $"{fileName}: {content.Length} chars, modified {lastModified:HH:mm:ss}";
+      return $"{fileName}: {Content.Length} chars, modified {LastModified:HH:mm:ss}";
     }
 
     public string GetFullPath()
     {
-      return filePath;
+      return FilePath;
     }
   }
 }

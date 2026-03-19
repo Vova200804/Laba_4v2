@@ -7,24 +7,24 @@ namespace TextFileProcessor
 {
   public class SearchResult
   {
-    public string filePath { get; private set; }
-    public string fileName { get; private set; }
+    public string FilePath { get; private set; }
+    public string FileName { get; private set; }
     public string keyword { get; private set; }
-    public int occurrences { get; private set; }
+    public int Occurrences { get; private set; }
     public List<int> lineNumbers { get; private set; }
 
     public SearchResult(string path, string keyword)
     {
-      filePath = path;
-      fileName = Path.GetFileName(path);
+      FilePath = path;
+      FileName = Path.GetFileName(path);
       this.keyword = keyword;
-      occurrences = 0;
+      Occurrences = 0;
       lineNumbers = new List<int>();
     }
 
     public void AddOccurrence(int lineNumber)
     {
-      ++occurrences;
+      ++Occurrences;
       lineNumbers.Add(lineNumber);
     }
 
@@ -33,7 +33,7 @@ namespace TextFileProcessor
       string lineNumbersStr;
       lineNumbersStr = string.Join(", ", lineNumbers);
 
-      return $"{fileName}: {occurrences} matches at lines {lineNumbersStr}";
+      return $"{FileName}: {Occurrences} matches at lines {lineNumbersStr}";
     }
   }
 
@@ -174,7 +174,7 @@ namespace TextFileProcessor
             ++lineNum;
           }
 
-          if (result.occurrences > 0)
+          if (result.Occurrences > 0)
           {
             results.Add(result);
           }

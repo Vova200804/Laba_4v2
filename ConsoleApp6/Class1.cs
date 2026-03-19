@@ -42,6 +42,10 @@ namespace TextFileProcessor
         $"Type 0 to exit.\n"
       );
 
+      string input;
+      int choice;
+      bool parseResult;
+
       while (true)
       {
         Console.WriteLine(
@@ -60,12 +64,8 @@ namespace TextFileProcessor
         );
 
         Console.Write("Choose: ");
-        string input;
         input = Console.ReadLine();
 
-        int choice;
-
-        bool parseResult;
         parseResult = int.TryParse(input, out choice);
 
         if (!parseResult)
@@ -185,7 +185,7 @@ namespace TextFileProcessor
               {
                 foreach (SearchResult result in indexed)
                 {
-                  indexMessage = indexMessage + $"\n   {result.fileName} - {result.occurrences} matches";
+                  indexMessage = indexMessage + $"\n   {result.FileName} - {result.Occurrences} matches";
                 }
               }
 
